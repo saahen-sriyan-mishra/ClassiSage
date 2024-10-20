@@ -37,7 +37,28 @@ aws_account_id = "<YOUR_AWS_ACCOUNT_ID>"
 output = subprocess.check_output('terraform output -json', shell=True, cwd = r'<PATH_TO_THE_CLONED_FILE>'
 ```
 and change it to the path where the project directory is present and save it.
-- Then do a `Run All` on the `ClassiSage\ml_ops\merged_&_cleaned_train_data_upload.ipynb` and after the completion of the execution of the entire notebook re-open your AWS Management Console.
+- Then on the `ClassiSage\ml_ops\data_upload.ipynb` run all code cell till cell number 25 with the code 
+``` python
+# Try to upload the local CSV file to the S3 bucket
+try:
+    print(f"try block executing")
+    s3.upload_file(
+        Filename=local_file_path, 
+        Bucket=bucket_name,       
+        Key=file_key               # S3 file key (filename in the bucket)
+    )
+    print(f"Successfully uploaded {file_key} to {bucket_name}")
+    
+    # Delete the local file after uploading to S3
+    os.remove(local_file_path)
+    print(f"Local file {local_file_path} deleted after upload.")
+    
+except Exception as e:
+    print(f"Failed to upload file: {e}")
+    os.remove(local_file_path)
+```
+ to upload dataset to S3 Bucket.
+- After the complete execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
 - Go to the notebook instance in the AWS SageMaker, click on the created instance and click on open Jupyter.
 - After that click on `new` on the top right side of the window and select on `terminal`.
@@ -48,11 +69,23 @@ aws s3 cp s3://<Bucket-Name>/pretrained_sm.ipynb /home/ec2-user/SageMaker/
 ```
 - Go Back to the opened Jupyter instance and click on the `pretrained_sm.ipynb` file to open it and assign it a `conda-python3` Kernel.
 - Scroll Down to the 4th cell and replace the variable `bucket_name`'s value by the VS Code's terminal output for `bucket_name = "<bucket-name>"`
-- On the top of the file do a `Restart and Run All` by going to the Kernel tab. 
+- On the top of the file do a `Restart` by going to the Kernel tab.
+- Execute the Notebook till code cell number 27, with the code 
+``` python
+# Print the metrics
+print(f"Accuracy: {accuracy:.8f}")
+print(f"Precision: {precision:.8f}")
+print(f"Recall: {recall:.8f}")
+print(f"F1 Score: {f1:.8f}")
+print(f"False Positive Rate: {false_positive_rate:.8f}")
+```
+that calculate the metrics.
 - You will get the intended result.
 
-**The data will be fetched, split into train and test sets after being adjusted for Labels and Features with a defined output path, then a model using SageMaker's Python SDK will be Trained, Deployed as a EndPoint, Validated to give different metrics. Finally the end-point and the resources within the S3 bucket will be deleted so ensure no additional charges.**
-
+- **The data will be fetched, split into train and test sets after being adjusted for Labels and Features with a defined output path, then a model using SageMaker's Python SDK will be Trained, Deployed as a EndPoint, Validated to give different metrics.**  
+- In the VS Code comeback to data_upload.ipynb to execute last 2 code cells to download the S3 bucket's data into the local system.
+- Finally go into pretrained_sm present inside the SageMaker instance and execute the final 2 code cells.
+- **The end-point and the resources within the S3 bucket will be deleted to ensure no additional charges.**
 - Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
 
 ### Implementation Process
