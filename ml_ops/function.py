@@ -36,6 +36,3 @@ def check_file_creation(local_file_path):
         print(f"Local file {local_file_path} created successfully.")
     else:
         print(f"Failed to create local file {local_file_path}.")
-
-# Example usage:
-# check_file_creation('/path/to/local_file.csv')
