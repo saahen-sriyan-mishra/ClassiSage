@@ -8,7 +8,7 @@ def get_bucket_name():
     try:
         print("Attempting to get Terraform output...")
         # Specify the working directory for .tf files location
-        output = subprocess.check_output('terraform output -json', shell=True, cwd=r'C:\Users\KIIT\Desktop\ML-AWS')
+        output = subprocess.check_output('terraform output -json', shell=True, cwd=r'<PATH_TO_THE_CLONED_FILE>')
         
         # Decode the output
         print("Raw Terraform Output:", output.decode('utf-8'))  # Decode bytes to string
