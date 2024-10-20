@@ -18,7 +18,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 - Clone the repository using Git Bash / download a .zip file / fork the repository.
 - Go to your AWS Management Console, click on your account profile on the Top-Right corner and select `My Security Credentials` from the dropdown.
 - **Create Access Key:** In the Access keys section, click on Create New Access Key, a dialog will appear with your Access Key ID and Secret Access Key.
-- **Download or Copy Keys:** IMPORTANT: Download the .csv file or copy the keys to a secure location. This is the only time you can view the secret access key.
+- **Download or Copy Keys:** (IMPORTANT) Download the .csv file or copy the keys to a secure location. This is the only time you can view the secret access key.
 - Open the cloned Repo. in your VS Code
 - Create a file under ClassiSage as terraform.tfvars with its content as
 
