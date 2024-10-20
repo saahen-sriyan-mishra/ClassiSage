@@ -2,10 +2,6 @@ ML AWS/
     .terraform
 
     aws_modules/
-        glue/
-            glue_job_sql_exe.tf
-        rds/
-            rds_instance_create.tf
         s3/
             s3_data_bucket_create.tf
         sagemaker/
@@ -26,14 +22,10 @@ ML AWS/
             Event_traces_part_4.csv
             Event_traces_part_5.csv
 
-    data_wrangling/
-        data_load_cleaning.sql
-
     ml_ops/
         functions.py
         data_upload.ipynb
         pretrained_sm.ipynb
-
 
     main.tf 
     terraform.tfvars
