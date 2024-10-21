@@ -25,7 +25,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
                             'xgboost', 
                             repo_version='1.0-1')
   ```
-  ![a](https://github.com/user-attachments/assets/74cc5ffe-b437-4156-a234-75b5d8f0cd14)
+[  ![a](https://github.com/user-attachments/assets/74cc5ffe-b437-4156-a234-75b5d8f0cd14)](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/a.jpg)
 
 - **Initializing Hyper Parameter and Estimator call to the container**
   ``` python
@@ -207,7 +207,7 @@ sess = boto3.session.Session()
 print("Region is " + my_region + " and bucket is " + bucket_name)
 ```
 
-  **Output of the code cell execution**
+- **Output of the code cell execution**
   ![el](https://github.com/user-attachments/assets/6517d028-f6a4-49f6-a01f-04ffdf0884a5)
 
 -------------------------------------------------------------------------------------------------
