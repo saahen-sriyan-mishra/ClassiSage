@@ -288,7 +288,7 @@ xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.l
 - Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
 - All the created resource instances will be deleted.
 
-## Auto Created Oblects
+## Auto Created Objects
 ClassiSage/downloaded_bucket_content
 ClassiSage/.terraform  
 ClassiSage/ml_ops/__pycache  
