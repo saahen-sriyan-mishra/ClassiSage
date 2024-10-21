@@ -34,7 +34,7 @@ aws_account_id = "<YOUR_AWS_ACCOUNT_ID>"
 - This will show two outputs one as bucket_name other as pretrained_ml_instance_name (The 3rd resource is the variable name given to the bucket since they are global resources ).
 - After Completion of the command in the terminal come to `ClassiSage/ml_ops/function.py` and on the 11th line of the file with code
 ```python
-output = subprocess.check_output('terraform output -json', shell=True, cwd = r'<PATH_TO_THE_CLONED_FILE>'
+output = subprocess.check_output('terraform output -json', shell=True, cwd = r'<PATH_TO_THE_CLONED_FILE>' #C:\Users\Saahen\Desktop\ClassiSage
 ```
 and change it to the path where the project directory is present and save it.
 - Then on the `ClassiSage\ml_ops\data_upload.ipynb` run all code cell till cell number 25 with the code 
@@ -67,7 +67,7 @@ except Exception as e:
 ```bash
 aws s3 cp s3://<Bucket-Name>/pretrained_sm.ipynb /home/ec2-user/SageMaker/
 ```
-- Go Back to the opened Jupyter instance and click on the `pretrained_sm.ipynb` file to open it and assign it a `conda-python3` Kernel.
+- Go Back to the opened Jupyter instance and click on the `pretrained_sm.ipynb` file to open it and assign it a `conda_python3` Kernel.
 - Scroll Down to the 4th cell and replace the variable `bucket_name`'s value by the VS Code's terminal output for `bucket_name = "<bucket-name>"`
 - On the top of the file do a `Restart` by going to the Kernel tab.
 - Execute the Notebook till code cell number 27, with the code 
@@ -83,10 +83,49 @@ that calculate the metrics.
 - You will get the intended result.
 
 - **The data will be fetched, split into train and test sets after being adjusted for Labels and Features with a defined output path, then a model using SageMaker's Python SDK will be Trained, Deployed as a EndPoint, Validated to give different metrics.**  
+
+-------------------------------------------------------------------------------------------------
+**Console Observation Notes:**
+- On execution of 8th cell with code
+``` python
+# Set an output path where the trained model will be saved
+prefix = 'pretrained-algo'
+output_path ='s3://{}/{}/output'.format(bucket_name, prefix)
+print(output_path)
+```
+
+--------------------------------
+
+an output path will be setup in the S3 to store model data.
+- On execution of 23rd cell with code
+``` python
+estimator.fit({'train': s3_input_train,'validation': s3_input_test})
+```
+A training job will start, you can check it under the training tab.
+
+
+after some time (3 mins est.) it shall be completed and will show the same.
+
+
+- On execution of the code cell after that with code
+``` python
+xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
+```
+an endpoint will be deployed
+
+-------------------------------------------------------------------------------------------------
 - In the VS Code comeback to data_upload.ipynb to execute last 2 code cells to download the S3 bucket's data into the local system.
+-------------------------------------------------------------------------------------------------
+**Model Observation Note**
+-------------------------------------------------------------------------------------------------
+
+- You will get a log of downloaded files in the output cell. It will contain a raw pretrained_sm.ipynb, final_dataset.csv and a model output folder named 'pretrained-algo' with the execution data of the sagemaker code file.
+
+- Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
+
+
 - Finally go into pretrained_sm present inside the SageMaker instance and execute the final 2 code cells.
 - **The end-point and the resources within the S3 bucket will be deleted to ensure no additional charges.**
-- Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
 
 ### Implementation Process
 

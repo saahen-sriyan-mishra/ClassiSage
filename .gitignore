@@ -8,6 +8,7 @@
 */terraform.tfstate.backup
 */.terraform
 
+downloaded_bucket_content
 # Crash log files
 crash.log
 crash.*.log

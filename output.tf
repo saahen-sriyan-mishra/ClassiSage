@@ -10,10 +10,3 @@ output "bucket_name" {
 output "pretrained_ml_instance_name" {
   value = module.sagemaker.pretrained_ml_instance_name
 }
-
-# Output the RDS instance name
-output "rds_db_name" {
-  value = module.rds.db_name
-  description = "The name of the RDS database instance"
-}
-

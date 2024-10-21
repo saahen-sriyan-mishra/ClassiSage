@@ -30,9 +30,3 @@ module "sagemaker" {
   aws_account_id = var.aws_account_id
   bucket_name    = module.s3.bucket_name  # Pass the bucket name output from the S3 module
 }
-
-# Referencing RDS Module
-module "rds" {
-  source = "./aws_modules/rds"
-}
-
