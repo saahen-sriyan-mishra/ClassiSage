@@ -17,7 +17,11 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 - The project implements [SageMaker Python SDK](https://sagemaker.readthedocs.io/en/stable/?form=MG0AV3) with the model [XGBoost version 1.2](https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost.html)
 
 --------------------------------------------------
-## Model
+## System Architecture
+
+![System_Arch_Diagram_Terraform](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/System_Arch_Diagram_Terraform.png)
+
+## ML Model
 - Image URI
   ``` python
   # Looks for the XGBoost image URI and builds an XGBoost container. Specify the repo_version depending on preference.
