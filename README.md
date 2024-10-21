@@ -4,7 +4,8 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 
 ## **Content**
 - [Overview](#overview): Project Overview.
-- [Model](#model): Model Overview.
+- [System Architecture](#system-architecture): System Architecture Diagram
+- [ML Model](#ml-model): Model Overview.
 - [Getting Started](#getting-started): How to run the project.
 - [Console Observations](#console-observation-notes): Changes in instances and infrastructure that can be observed while running the project.
 - [Ending and Cleanup](#ending-and-cleanup): Ensuring no additional charges.
