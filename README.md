@@ -3,9 +3,12 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 
 
 **Content**
-- [Overview](#overview)
-- [Model](#model)
-- [Getting Started](#getting-started-how-to-run-the-project)
+- [Overview](#overview): Project Overview.
+- [Model](#model): Model Overview.
+- [Getting Started](#getting-started): How to run the project.
+- [Console Observations](#console-observation-note): Changes in instances and infrastructure that can be observed during running the project.
+- [Ending and Cleanup](#ending-and-cleanup): Ensuring no additional charges.
+- [Auto Created Objects](#auto-created-objects): Files and Folders created during execution process.
 
 ### Overview
 - The model is made with [AWS](https://aws.amazon.com/free/?gclid=Cj0KCQjwsc24BhDPARIsAFXqAB3yNI9ZauzphQ1GOonYTUXJYTKhYG55KwGHAYy6Lt8SZ-c9RjXTv0QaAtr3EALw_wcB&trk=14a4002d-4936-4343-8211-b5a150ca592b&sc_channel=ps&ef_id=Cj0KCQjwsc24BhDPARIsAFXqAB3yNI9ZauzphQ1GOonYTUXJYTKhYG55KwGHAYy6Lt8SZ-c9RjXTv0QaAtr3EALw_wcB:G:s&s_kwcid=AL!4422!3!453325184782!e!!g!!aws!10712784856!111477279771&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all) [SageMaker](https://aws.amazon.com/pm/sagemaker/?gclid=Cj0KCQjwsc24BhDPARIsAFXqAB36k5XVF3a7LCyuaYrqUK324FyKAjQvShNYyjQEGoPycm9gmHU7I_saAjyHEALw_wcB&trk=b5c1cff2-854a-4bc8-8b50-43b965ba0b13&sc_channel=ps&ef_id=Cj0KCQjwsc24BhDPARIsAFXqAB36k5XVF3a7LCyuaYrqUK324FyKAjQvShNYyjQEGoPycm9gmHU7I_saAjyHEALw_wcB:G:s&s_kwcid=AL!4422!3!532435768482!e!!g!!sagemaker!11539707798!109299504381) for Classification of [HDFS](http://hadoop.apache.org/hdfs) Logs along with [S3](https://aws.amazon.com/pm/serv-s3/?gclid=Cj0KCQjwsc24BhDPARIsAFXqAB1x3WFS-mpsRSyK5kwsOL07T6e8r5ZganmuBBahgeEjtuEtrCS66OoaAqZvEALw_wcB&trk=b8b87cd7-09b8-4229-a529-91943319b8f5&sc_channel=ps&ef_id=Cj0KCQjwsc24BhDPARIsAFXqAB1x3WFS-mpsRSyK5kwsOL07T6e8r5ZganmuBBahgeEjtuEtrCS66OoaAqZvEALw_wcB:G:s&s_kwcid=AL!4422!3!536397139414!p!!g!!amazon%20s3%20cloud%20storage!11539706604!115473954194) for storing dataset, Notebook file (containing code for SageMaker instance) and  Model Output.
@@ -117,20 +120,7 @@ print(f"False Positive Rate: {false_positive_rate:.8f}")
 ```
 ![e](https://github.com/user-attachments/assets/037391ca-ac07-46a5-87d1-86311001d2b2)
 
-- **Deleting The EndPoint**
-``` python
-sagemaker.Session().delete_endpoint(xgb_predictor.endpoint)
-```
-![f](https://github.com/user-attachments/assets/e02ba82d-5bd1-41cf-a024-7b7b45a0c7fc)
-
-- **Clearing S3** (Needed to destroy the instance)
-``` python
-bucket_to_delete = boto3.resource('s3').Bucket(bucket_name)
-bucket_to_delete.objects.all().delete()
-```
-![g](https://github.com/user-attachments/assets/4df008a8-9a1e-4b35-aa01-c304b717bf51)
-
-### Getting Started: How to Run the project
+### Getting Started
 - Clone the repository using Git Bash / download a .zip file / fork the repository.
 - Go to your AWS Management Console, click on your account profile on the Top-Right corner and select `My Security Credentials` from the dropdown.
 - **Create Access Key:** In the Access keys section, click on Create New Access Key, a dialog will appear with your Access Key ID and Secret Access Key.
@@ -241,39 +231,37 @@ print(f"False Positive Rate: {false_positive_rate:.8f}")
 - **The data will be fetched, split into train and test sets after being adjusted for Labels and Features with a defined output path, then a model using SageMaker's Python SDK will be Trained, Deployed as a EndPoint, Validated to give different metrics.**  
 
 -------------------------------------------------------------------------------------------------
-**Console Observation Notes:**
-- On execution of 8th cell with code
+### Console Observation Notes
+**Execution of 8th cell**
 ``` python
 # Set an output path where the trained model will be saved
 prefix = 'pretrained-algo'
 output_path ='s3://{}/{}/output'.format(bucket_name, prefix)
 print(output_path)
 ```
-an output path will be setup in the S3 to store model data.
+An output path will be setup in the S3 to store model data.
 
 ![x](https://github.com/user-attachments/assets/008e7340-d064-4f8a-b11c-c9d3e8470996)
 ![xx](https://github.com/user-attachments/assets/4f9384e7-4a45-4220-a903-c84750689c9a)
 
 
-- On execution of 23rd cell with code
+**Execution of 23rd cell**
 ``` python
 estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 ```
 
-  A training job will start, you can check it under the training tab.
+- A training job will start, you can check it under the training tab.
 ![4](https://github.com/user-attachments/assets/7391e566-b6df-4a58-b381-116eca49ed84)
-  After some time (3 mins est.) It shall be completed and will show the same.
+- After some time (3 mins est.) It shall be completed and will show the same.
 ![5](https://github.com/user-attachments/assets/313bd40d-9570-4b25-8dc1-86a9dc00b2a1)
 
-- On execution of the code cell after that with code
+**Execution of 24th code cell**
 ``` python
 xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
 ```
-an endpoint will be deployed under Inference tab.
+- An endpoint will be deployed under Inference tab.
 
 ![6](https://github.com/user-attachments/assets/e5ca8d0f-b626-4d10-ad98-950c9a05d0f1)
-
--------------------------------------------------------------------------------------------------
 
 **Additional Console Observation:**
 - Creation of an Endpoint Configuration under Inference tab.
@@ -282,19 +270,35 @@ an endpoint will be deployed under Inference tab.
 ![model](https://github.com/user-attachments/assets/f863ee25-86ca-4c94-a77e-6836410f5cb2)
 
 -------------------------------------------------------------------------------------------------
+### Ending and Cleanup
 - In the VS Code comeback to data_upload.ipynb to execute last 2 code cells to download the S3 bucket's data into the local system.
-- The folder will be named downloaded_bucket_content
+- The folder will be named downloaded_bucket_content.
+**Directory Structure of folder Downloaded.**
+
 ![dbc](https://github.com/user-attachments/assets/28da4fb9-b533-4e3d-9521-22d9b2cd6b87)
 
-Directory Structure of folder Downloaded.
 - You will get a log of downloaded files in the output cell. It will contain a raw pretrained_sm.ipynb, final_dataset.csv and a model output folder named 'pretrained-algo' with the execution data of the sagemaker code file.
--------------------------------------------------------------------------------------------------
-- Finally go into pretrained_sm present inside the SageMaker instance and execute the final 2 code cells.
-- **The end-point and the resources within the S3 bucket will be deleted to ensure no additional charges.**
+- Finally go into pretrained_sm.ipynb present inside the SageMaker instance and execute the final 2 code cells.
+**The end-point and the resources within the S3 bucket will be deleted to ensure no additional charges.**
+- Deleting The EndPoint
+``` python
+sagemaker.Session().delete_endpoint(xgb_predictor.endpoint)
+```
+
+![f](https://github.com/user-attachments/assets/e02ba82d-5bd1-41cf-a024-7b7b45a0c7fc)
+
+- Clearing S3: (Needed to destroy the instance)
+``` python
+bucket_to_delete = boto3.resource('s3').Bucket(bucket_name)
+bucket_to_delete.objects.all().delete()
+```
+
+![g](https://github.com/user-attachments/assets/4df008a8-9a1e-4b35-aa01-c304b717bf51)
+
 - Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
+- All the created resource instances will be deleted.
 
-
-**Auto Created Files** 
+**Auto Created Oblects** 
 ClassiSage/downloaded_bucket_content
 ClassiSage/.terraform  
 ClassiSage/ml_ops/__pycache  
