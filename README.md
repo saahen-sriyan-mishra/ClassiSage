@@ -22,7 +22,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 --------------------------------------------------
 ## System Architecture
 
-![System_Arch_Diagram_Terraform](https://github.com/user-attachments/assets/1d9be0ac-89a1-499d-9622-9e86e286da7d)
+![System_Arch_Diagram_Terraform](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/System_Arch_Diagram_Terraform.png)
 ## ML Model
 - Image URI
   ``` python
@@ -31,7 +31,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
                             'xgboost', 
                             repo_version='1.0-1')
   ```
-  ![a](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/a.jpg)
+  ![Get Image method execution](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/a.jpg)
 
 - **Initializing Hyper Parameter and Estimator call to the container**
   ``` python
@@ -56,20 +56,20 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
                                           train_max_run=300,                    # Specifies the maximum runtime for the training job in seconds. Here, it's 300 seconds (5 minutes).
                                           train_max_wait=600)                   # Sets the maximum time to wait for the job to complete, including the time waiting for spot instances, in seconds. Here, it's 600 seconds (10 minutes).
   ```
-  ![b](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/b.jpg)
+  ![Estimator instance to call image](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/b.jpg)
 
 - **Training Job**
 
   ``` python
   estimator.fit({'train': s3_input_train,'validation': s3_input_test})
   ```
-  ![c](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/c.jpg)
+  ![Training Job Execution](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/c.jpg)
 
 - **Deployment**
   ``` python
   xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
   ```
-  ![d](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/d.jpg)
+  ![Endpoint Deployment/Hosting](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/d.jpg)
 
 - **Validation**
   ``` python
@@ -123,7 +123,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
   print(f"F1 Score: {f1:.8f}")
   print(f"False Positive Rate: {false_positive_rate:.8f}")
   ```
-  ![e](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/e.jpg)
+  ![Validation metrics(ACC, Precision, Recall, F1, False +ve rate)](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/e.jpg)
 
 ## Getting Started
 - Clone the repository using Git Bash / download a .zip file / fork the repository.
