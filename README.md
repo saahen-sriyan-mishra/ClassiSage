@@ -28,8 +28,8 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
   ![a](https://github.com/user-attachments/assets/74cc5ffe-b437-4156-a234-75b5d8f0cd14)
 
 - **Initializing Hyper Parameter and Estimator call to the container**
-``` python
-hyperparameters = {
+  ``` python
+  hyperparameters = {
         "max_depth":"5",                ## Maximum depth of a tree. Higher means more complex models but risk of overfitting.
         "eta":"0.2",                    ## Learning rate. Lower values make the learning process slower but more precise.
         "gamma":"4",                    ## Minimum loss reduction required to make a further partition on a leaf node. Controls the model’s complexity.
@@ -38,8 +38,8 @@ hyperparameters = {
         "objective":"binary:logistic",  ## Specifies the learning task and corresponding objective. binary:logistic is for binary classification.
         "num_round":50                  ## Number of boosting rounds, essentially how many times the model is trained.
         }
-# A SageMaker estimator that calls the xgboost-container
-estimator = sagemaker.estimator.Estimator(image_uri=container,                  # Points to the XGBoost container we previously set up. This tells SageMaker which algorithm container to use.
+  # A SageMaker estimator that calls the xgboost-container
+  estimator = sagemaker.estimator.Estimator(image_uri=container,                  # Points to the XGBoost container we previously set up. This tells SageMaker which algorithm container to use.
                                           hyperparameters=hyperparameters,      # Passes the defined hyperparameters to the estimator. These are the settings that guide the training process.
                                           role=sagemaker.get_execution_role(),  # Specifies the IAM role that SageMaker assumes during the training job. This role allows access to AWS resources like S3.
                                           train_instance_count=1,               # Sets the number of training instances. Here, it’s using a single instance.
@@ -49,76 +49,75 @@ estimator = sagemaker.estimator.Estimator(image_uri=container,                  
                                           train_use_spot_instances=True,        # Utilizes spot instances for training, which can be significantly cheaper than on-demand instances. Spot instances are spare EC2 capacity offered at a lower price.
                                           train_max_run=300,                    # Specifies the maximum runtime for the training job in seconds. Here, it's 300 seconds (5 minutes).
                                           train_max_wait=600)                   # Sets the maximum time to wait for the job to complete, including the time waiting for spot instances, in seconds. Here, it's 600 seconds (10 minutes).
-```
-![b](https://github.com/user-attachments/assets/524488c3-23fb-472f-9892-803afe7bdeca)
+  ```
+  ![b](https://github.com/user-attachments/assets/524488c3-23fb-472f-9892-803afe7bdeca)
 
 - **Training Job**
 
-``` python
-estimator.fit({'train': s3_input_train,'validation': s3_input_test})
-```
-![c](https://github.com/user-attachments/assets/3e43ff2e-7d68-4441-a184-eef99ebfc984)
+  ``` python
+  estimator.fit({'train': s3_input_train,'validation': s3_input_test})
+  ```
+  ![c](https://github.com/user-attachments/assets/3e43ff2e-7d68-4441-a184-eef99ebfc984)
 
 - **Deployment**
-``` python
-xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
-```
-![d](https://github.com/user-attachments/assets/3434c2ef-b782-452d-b0e1-f8599a15cdd3)
+  ``` python
+  xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
+  ```
+  ![d](https://github.com/user-attachments/assets/3434c2ef-b782-452d-b0e1-f8599a15cdd3)
 
 - **Validation**
-``` python
-from sagemaker.serializers import CSVSerializer
-import numpy as np
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+  ``` python
+  from sagemaker.serializers import CSVSerializer
+  import numpy as np
+  from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
 
-# Drop the label column from the test data
-test_data_features = test_data_final.drop(columns=['Label']).values
+  # Drop the label column from the test data
+  test_data_features = test_data_final.drop(columns=['Label']).values
 
-# Set the content type and serializer
-xgb_predictor.serializer = CSVSerializer()
-xgb_predictor.content_type = 'text/csv'
+  # Set the content type and serializer
+  xgb_predictor.serializer = CSVSerializer()
+  xgb_predictor.content_type = 'text/csv'
 
-# Perform prediction
-predictions = xgb_predictor.predict(test_data_features).decode('utf-8')
+  # Perform prediction
+  predictions = xgb_predictor.predict(test_data_features).decode('utf-8')
 
-y_test = test_data_final['Label'].values
+  y_test = test_data_final['Label'].values
 
-# Convert the predictions into a array
-predictions_array = np.fromstring(predictions, sep=',')
-print(predictions_array.shape)
+  # Convert the predictions into a array
+  predictions_array = np.fromstring(predictions, sep=',')
+  print(predictions_array.shape)
 
-# Converting predictions them to binary (0 or 1)
-threshold = 0.5
-binary_predictions = (predictions_array >= threshold).astype(int)
+  # Converting predictions them to binary (0 or 1)
+  threshold = 0.5
+  binary_predictions = (predictions_array >= threshold).astype(int)
 
-# Accuracy
-accuracy = accuracy_score(y_test, binary_predictions)
+  # Accuracy
+  accuracy = accuracy_score(y_test, binary_predictions)
 
-# Precision
-precision = precision_score(y_test, binary_predictions)
+  # Precision
+  precision = precision_score(y_test, binary_predictions)
 
-# Recall
-recall = recall_score(y_test, binary_predictions)
+  # Recall
+  recall = recall_score(y_test, binary_predictions)
 
-# F1 Score
-f1 = f1_score(y_test, binary_predictions)
+  # F1 Score
+  f1 = f1_score(y_test, binary_predictions)
 
-# Confusion Matrix
-cm = confusion_matrix(y_test, binary_predictions)
+  # Confusion Matrix
+  cm = confusion_matrix(y_test, binary_predictions)
 
-# False Positive Rate (FPR) using the confusion matrix
-tn, fp, fn, tp = cm.ravel()
-false_positive_rate = fp / (fp + tn)
+  # False Positive Rate (FPR) using the confusion matrix
+  tn, fp, fn, tp = cm.ravel()
+  false_positive_rate = fp / (fp + tn)
 
-
-# Print the metrics
-print(f"Accuracy: {accuracy:.8f}")
-print(f"Precision: {precision:.8f}")
-print(f"Recall: {recall:.8f}")
-print(f"F1 Score: {f1:.8f}")
-print(f"False Positive Rate: {false_positive_rate:.8f}")
-```
-![e](https://github.com/user-attachments/assets/037391ca-ac07-46a5-87d1-86311001d2b2)
+  # Print the metrics
+  print(f"Accuracy: {accuracy:.8f}")
+  print(f"Precision: {precision:.8f}")
+  print(f"Recall: {recall:.8f}")
+  print(f"F1 Score: {f1:.8f}")
+  print(f"False Positive Rate: {false_positive_rate:.8f}")
+  ```
+  ![e](https://github.com/user-attachments/assets/037391ca-ac07-46a5-87d1-86311001d2b2)
 
 ### Getting Started
 - Clone the repository using Git Bash / download a .zip file / fork the repository.
