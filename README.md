@@ -4,15 +4,131 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 
 **Content**
 - [Overview](#overview)
+- [Model](#model)
 - [Getting Started](#getting-started-how-to-run-the-project)
-- [Implementation Process](#implementation-process)
-- [Output](#output)
 
 ### Overview
 - The model is made with [AWS](https://aws.amazon.com/free/?gclid=Cj0KCQjwsc24BhDPARIsAFXqAB3yNI9ZauzphQ1GOonYTUXJYTKhYG55KwGHAYy6Lt8SZ-c9RjXTv0QaAtr3EALw_wcB&trk=14a4002d-4936-4343-8211-b5a150ca592b&sc_channel=ps&ef_id=Cj0KCQjwsc24BhDPARIsAFXqAB3yNI9ZauzphQ1GOonYTUXJYTKhYG55KwGHAYy6Lt8SZ-c9RjXTv0QaAtr3EALw_wcB:G:s&s_kwcid=AL!4422!3!453325184782!e!!g!!aws!10712784856!111477279771&all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all) [SageMaker](https://aws.amazon.com/pm/sagemaker/?gclid=Cj0KCQjwsc24BhDPARIsAFXqAB36k5XVF3a7LCyuaYrqUK324FyKAjQvShNYyjQEGoPycm9gmHU7I_saAjyHEALw_wcB&trk=b5c1cff2-854a-4bc8-8b50-43b965ba0b13&sc_channel=ps&ef_id=Cj0KCQjwsc24BhDPARIsAFXqAB36k5XVF3a7LCyuaYrqUK324FyKAjQvShNYyjQEGoPycm9gmHU7I_saAjyHEALw_wcB:G:s&s_kwcid=AL!4422!3!532435768482!e!!g!!sagemaker!11539707798!109299504381) for Classification of [HDFS](http://hadoop.apache.org/hdfs) Logs along with [S3](https://aws.amazon.com/pm/serv-s3/?gclid=Cj0KCQjwsc24BhDPARIsAFXqAB1x3WFS-mpsRSyK5kwsOL07T6e8r5ZganmuBBahgeEjtuEtrCS66OoaAqZvEALw_wcB&trk=b8b87cd7-09b8-4229-a529-91943319b8f5&sc_channel=ps&ef_id=Cj0KCQjwsc24BhDPARIsAFXqAB1x3WFS-mpsRSyK5kwsOL07T6e8r5ZganmuBBahgeEjtuEtrCS66OoaAqZvEALw_wcB:G:s&s_kwcid=AL!4422!3!536397139414!p!!g!!amazon%20s3%20cloud%20storage!11539706604!115473954194) for storing dataset, Notebook file (containing code for SageMaker instance) and  Model Output.
 - The Infrastructure setup is automated using [Terraform](https://www.terraform.io/) a tool to provide infrastructure-as-code created by [HashiCorp](https://www.hashicorp.com/)
 - The data set used is [HDFS_v1](https://github.com/logpai/loghub).
 - The project implements [SageMaker Python SDK](https://sagemaker.readthedocs.io/en/stable/?form=MG0AV3) with the model [XGBoost version 1.2](https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost.html)
+
+
+### Model
+- Image URI
+``` python
+# Looks for the XGBoost image URI and builds an XGBoost container. Specify the repo_version depending on preference.
+container = get_image_uri(boto3.Session().region_name,
+                          'xgboost', 
+                          repo_version='1.0-1')
+```
+![a](https://github.com/user-attachments/assets/74cc5ffe-b437-4156-a234-75b5d8f0cd14)
+
+- Initializing Hyper Parameter and Estimator call to the container
+``` python
+hyperparameters = {
+        "max_depth":"5",                ## Maximum depth of a tree. Higher means more complex models but risk of overfitting.
+        "eta":"0.2",                    ## Learning rate. Lower values make the learning process slower but more precise.
+        "gamma":"4",                    ## Minimum loss reduction required to make a further partition on a leaf node. Controls the model’s complexity.
+        "min_child_weight":"6",         ## Minimum sum of instance weight (hessian) needed in a child. Higher values prevent overfitting.
+        "subsample":"0.7",              ## Fraction of training data used. Reduces overfitting by sampling part of the data. 
+        "objective":"binary:logistic",  ## Specifies the learning task and corresponding objective. binary:logistic is for binary classification.
+        "num_round":50                  ## Number of boosting rounds, essentially how many times the model is trained.
+        }
+# A SageMaker estimator that calls the xgboost-container
+estimator = sagemaker.estimator.Estimator(image_uri=container,                  # Points to the XGBoost container we previously set up. This tells SageMaker which algorithm container to use.
+                                          hyperparameters=hyperparameters,      # Passes the defined hyperparameters to the estimator. These are the settings that guide the training process.
+                                          role=sagemaker.get_execution_role(),  # Specifies the IAM role that SageMaker assumes during the training job. This role allows access to AWS resources like S3.
+                                          train_instance_count=1,               # Sets the number of training instances. Here, it’s using a single instance.
+                                          train_instance_type='ml.m5.large',    # Specifies the type of instance to use for training. ml.m5.2xlarge is a general-purpose instance with a balance of compute, memory, and network resources.
+                                          train_volume_size=5, # 5GB            # Sets the size of the storage volume attached to the training instance, in GB. Here, it’s 5 GB.
+                                          output_path=output_path,              # Defines where the model artifacts and output of the training job will be saved in S3.
+                                          train_use_spot_instances=True,        # Utilizes spot instances for training, which can be significantly cheaper than on-demand instances. Spot instances are spare EC2 capacity offered at a lower price.
+                                          train_max_run=300,                    # Specifies the maximum runtime for the training job in seconds. Here, it's 300 seconds (5 minutes).
+                                          train_max_wait=600)                   # Sets the maximum time to wait for the job to complete, including the time waiting for spot instances, in seconds. Here, it's 600 seconds (10 minutes).
+```
+![b](https://github.com/user-attachments/assets/524488c3-23fb-472f-9892-803afe7bdeca)
+
+- Training Job
+
+``` python
+estimator.fit({'train': s3_input_train,'validation': s3_input_test})
+```
+![c](https://github.com/user-attachments/assets/3e43ff2e-7d68-4441-a184-eef99ebfc984)
+
+- Deployment
+``` python
+xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
+```
+![d](https://github.com/user-attachments/assets/3434c2ef-b782-452d-b0e1-f8599a15cdd3)
+
+- Validation
+``` python
+from sagemaker.serializers import CSVSerializer
+import numpy as np
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix
+
+# Drop the label column from the test data
+test_data_features = test_data_final.drop(columns=['Label']).values
+
+# Set the content type and serializer
+xgb_predictor.serializer = CSVSerializer()
+xgb_predictor.content_type = 'text/csv'
+
+# Perform prediction
+predictions = xgb_predictor.predict(test_data_features).decode('utf-8')
+
+y_test = test_data_final['Label'].values
+
+# Convert the predictions into a array
+predictions_array = np.fromstring(predictions, sep=',')
+print(predictions_array.shape)
+
+# Converting predictions them to binary (0 or 1)
+threshold = 0.5
+binary_predictions = (predictions_array >= threshold).astype(int)
+
+# Accuracy
+accuracy = accuracy_score(y_test, binary_predictions)
+
+# Precision
+precision = precision_score(y_test, binary_predictions)
+
+# Recall
+recall = recall_score(y_test, binary_predictions)
+
+# F1 Score
+f1 = f1_score(y_test, binary_predictions)
+
+# Confusion Matrix
+cm = confusion_matrix(y_test, binary_predictions)
+
+# False Positive Rate (FPR) using the confusion matrix
+tn, fp, fn, tp = cm.ravel()
+false_positive_rate = fp / (fp + tn)
+
+
+# Print the metrics
+print(f"Accuracy: {accuracy:.8f}")
+print(f"Precision: {precision:.8f}")
+print(f"Recall: {recall:.8f}")
+print(f"F1 Score: {f1:.8f}")
+print(f"False Positive Rate: {false_positive_rate:.8f}")
+```
+![e](https://github.com/user-attachments/assets/037391ca-ac07-46a5-87d1-86311001d2b2)
+
+- Deleting The EndPoint
+``` python
+sagemaker.Session().delete_endpoint(xgb_predictor.endpoint)
+```
+![f](https://github.com/user-attachments/assets/e02ba82d-5bd1-41cf-a024-7b7b45a0c7fc)
+
+- Clearing S3 (Needed to destroy the instance)
+``` python
+bucket_to_delete = boto3.resource('s3').Bucket(bucket_name)
+bucket_to_delete.objects.all().delete()
+```
+![g](https://github.com/user-attachments/assets/4df008a8-9a1e-4b35-aa01-c304b717bf51)
 
 ### Getting Started: How to Run the project
 - Clone the repository using Git Bash / download a .zip file / fork the repository.
@@ -274,14 +390,14 @@ print(output_path)
 ![x](https://github.com/user-attachments/assets/008e7340-d064-4f8a-b11c-c9d3e8470996)
 ![xx](https://github.com/user-attachments/assets/4f9384e7-4a45-4220-a903-c84750689c9a)
 
+an output path will be setup in the S3 to store model data.
 --------------------------------
 
-an output path will be setup in the S3 to store model data.
 - On execution of 23rd cell with code
 ``` python
 estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 ```
-A training job will start, you can check it under the training tab.
+`A training job will start, you can check it under the training tab.
 ![4](https://github.com/user-attachments/assets/7391e566-b6df-4a58-b381-116eca49ed84)
 
 - After some time (3 mins est.) It shall be completed and will show the same.
@@ -294,6 +410,7 @@ xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.l
 an endpoint will be deployed under Inference tab.
 ![6](https://github.com/user-attachments/assets/e5ca8d0f-b626-4d10-ad98-950c9a05d0f1)
 
+-------------------------------------------------------------------------------------------------
 
 **Additional Console Observation:**
 - Creation of an Endpoint Configuration under Inference tab.
@@ -319,13 +436,11 @@ Directory Structure of folder Downloaded.
 - Finally go into pretrained_sm present inside the SageMaker instance and execute the final 2 code cells.
 - **The end-point and the resources within the S3 bucket will be deleted to ensure no additional charges.**
 
-### Implementation Process
 
-### Output
-
-**NOTE:** Auto Created Files  
-ML-AWS/.terraform  
-ML-AWS/ml_ops/__pycache  
-ML-AWS/.terraform.lock.hcl  
-ML-AWS/terraform.tfstate  
-ML-AWS/terraform.tfstate.backup  
+**Auto Created Files** 
+ClassiSage/downloaded_bucket_content
+ClassiSage/.terraform  
+ClassiSage/ml_ops/__pycache  
+ClassiSage/.terraform.lock.hcl  
+ClassiSage/terraform.tfstate  
+ClassiSage/terraform.tfstate.backup  
