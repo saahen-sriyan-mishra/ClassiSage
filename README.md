@@ -1,6 +1,5 @@
 # ClassiSage
-![GitHub version](https://img.shields.io/github/v/release/OWNER/REPO)
-![Build Status](https://img.shields.io/github/workflow/status/OWNER/REPO/WORKFLOW)
+![Build Status](https://img.shields.io/badge/build-3.6-Yellow)
 
 A Machine Learning model made with AWS SageMaker and its Python SDK for Classification of HDFS Logs using Terraform for automation of infrastructure setup.
 
