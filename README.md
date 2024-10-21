@@ -175,8 +175,9 @@ Note: You didn't use the -out option to save this plan, so Terraform can't guara
 ```
 - Finally in the terminal type/paste `terraform apply --auto-approve`
 - This will show two outputs one as bucket_name other as pretrained_ml_instance_name (The 3rd resource is the variable name given to the bucket since they are global resources ).
+```
 ![0000](https://github.com/user-attachments/assets/d8d788a6-b8b8-4619-8999-c530625535cb)
-
+```
 - After Completion of the command is shown in the terminal, navigate to `ClassiSage/ml_ops/function.py` and on the 11th line of the file with code
 ```python
 output = subprocess.check_output('terraform output -json', shell=True, cwd = r'<PATH_TO_THE_CLONED_FILE>' #C:\Users\Saahen\Desktop\ClassiSage
@@ -203,15 +204,20 @@ except Exception as e:
     os.remove(local_file_path)
 ```
  to upload dataset to S3 Bucket.
+ ```
  ![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
+```
 Output of the code cell execution
 - After the execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
 -------------------------------------------------------------------------------------------------
+```
 ![1](https://github.com/user-attachments/assets/a3c177d8-6155-44b3-81f5-43b46e997548)
+```
 S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the .ipynb file containing model code.
-
+```
 ![2](https://github.com/user-attachments/assets/2b26d3f5-d955-4990-a0af-2eb7fe356ed7)
+```
 A SageMaker instance InService.
 -------------------------------------------------------------------------------------------------
 - Go to the notebook instance in the AWS SageMaker, click on the created instance and click on open Jupyter.
@@ -221,7 +227,9 @@ A SageMaker instance InService.
 ```bash
 aws s3 cp s3://<Bucket-Name>/pretrained_sm.ipynb /home/ec2-user/SageMaker/
 ```
+```
 ![3](https://github.com/user-attachments/assets/859bc4b6-2027-4e28-9ab7-cb9d521d499a)
+```
 Terminal command to upload the pretrained_sm.ipynb from S3 to Notebook's Jupyter environment
 -------------------------------------------------------------------------------------------------
 - Go Back to the opened Jupyter instance and click on the `pretrained_sm.ipynb` file to open it and assign it a `conda_python3` Kernel.
@@ -233,7 +241,9 @@ my_region = boto3.session.Session().region_name
 sess = boto3.session.Session()
 print("Region is " + my_region + " and bucket is " + bucket_name)
 ```
+```
 ![el](https://github.com/user-attachments/assets/6517d028-f6a4-49f6-a01f-04ffdf0884a5)
+```
 Output of the code cell execution
 -------------------------------------------------------------------------------------------------
 - On the top of the file do a `Restart` by going to the Kernel tab.
