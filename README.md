@@ -28,8 +28,10 @@ access_key = "<YOUR_ACCESS_KEY>"
 secret_key = "<YOUR_SECRET_KEY>"
 aws_account_id = "<YOUR_AWS_ACCOUNT_ID>"
 ```
+
 - Download and install all the dependancies for using Terraform and Python.
-- In the terminal type/paste `terraform init` to initialize the backend
+- In the terminal type/paste `terraform init` to initialize the backend.
+
 ```bash
 Initializing the backend...
 Initializing provider plugins...
@@ -48,11 +50,13 @@ If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary
 ```
+
 - Then type/paste `terraform Plan` to view the plan or simply `terraform validate` to ensure that there is no error.
-  ``` bash
-  Terraform used the selected providers to generate the following execution plan. Resource actions 
+
+``` bash
+Terraform used the selected providers to generate the following execution plan. Resource actions 
   + create
-```
+
 Terraform will perform the following actions:
 
   # module.s3.aws_s3_bucket.data_bucket will be created
@@ -173,8 +177,7 @@ Note: You didn't use the -out option to save this plan, so Terraform can't guara
 - This will show two outputs one as bucket_name other as pretrained_ml_instance_name (The 3rd resource is the variable name given to the bucket since they are global resources ).
 ![0000](https://github.com/user-attachments/assets/d8d788a6-b8b8-4619-8999-c530625535cb)
 
-
-- After Completion of the command in the terminal come to `ClassiSage/ml_ops/function.py` and on the 11th line of the file with code
+- After Completion of the command is shown in the terminal, navigate to `ClassiSage/ml_ops/function.py` and on the 11th line of the file with code
 ```python
 output = subprocess.check_output('terraform output -json', shell=True, cwd = r'<PATH_TO_THE_CLONED_FILE>' #C:\Users\Saahen\Desktop\ClassiSage
 ```
@@ -267,16 +270,24 @@ an output path will be setup in the S3 to store model data.
 estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 ```
 A training job will start, you can check it under the training tab.
+![4](https://github.com/user-attachments/assets/7391e566-b6df-4a58-b381-116eca49ed84)
 
-
-after some time (3 mins est.) it shall be completed and will show the same.
-
+- After some time (3 mins est.) It shall be completed and will show the same.
+![5](https://github.com/user-attachments/assets/313bd40d-9570-4b25-8dc1-86a9dc00b2a1)
 
 - On execution of the code cell after that with code
 ``` python
 xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
 ```
-an endpoint will be deployed
+an endpoint will be deployed under Inference tab.
+![6](https://github.com/user-attachments/assets/e5ca8d0f-b626-4d10-ad98-950c9a05d0f1)
+
+
+**Additional Console Observation:**
+- Creation of an Endpoint Configuration under Inference tab.
+![epc](https://github.com/user-attachments/assets/b2059605-bd80-4fff-a468-15a7c4834535)
+- Creation of an model also under under Inference tab.
+![model](https://github.com/user-attachments/assets/f863ee25-86ca-4c94-a77e-6836410f5cb2)
 
 -------------------------------------------------------------------------------------------------
 - In the VS Code comeback to data_upload.ipynb to execute last 2 code cells to download the S3 bucket's data into the local system.
