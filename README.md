@@ -171,9 +171,9 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
   ```
   to upload dataset to S3 Bucket.
 
-**Output of the code cell execution**
+- **Output of the code cell execution**
 
-![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
+  ![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
 
 - After the execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
