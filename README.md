@@ -127,12 +127,12 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 - Open the cloned Repo. in your VS Code
 - Create a file under ClassiSage as terraform.tfvars with its content as
 
-```hcl
-# terraform.tfvars
-access_key = "<YOUR_ACCESS_KEY>"
-secret_key = "<YOUR_SECRET_KEY>"
-aws_account_id = "<YOUR_AWS_ACCOUNT_ID>"
-```
+  ```hcl
+  # terraform.tfvars
+  access_key = "<YOUR_ACCESS_KEY>"
+  secret_key = "<YOUR_SECRET_KEY>"
+  aws_account_id = "<YOUR_AWS_ACCOUNT_ID>"
+  ```
 
 - Download and install all the dependancies for using Terraform and Python.
 - In the terminal type/paste [`terraform init`](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/Terraform%20init.md) to initialize the backend.
@@ -142,13 +142,13 @@ aws_account_id = "<YOUR_AWS_ACCOUNT_ID>"
 - Finally in the terminal type/paste `terraform apply --auto-approve`
 - This will show two outputs one as bucket_name other as pretrained_ml_instance_name (The 3rd resource is the variable name given to the bucket since they are global resources ).
 
-![0000](https://github.com/user-attachments/assets/d8d788a6-b8b8-4619-8999-c530625535cb)
+  ![0000](https://github.com/user-attachments/assets/d8d788a6-b8b8-4619-8999-c530625535cb)
 
 - After Completion of the command is shown in the terminal, navigate to `ClassiSage/ml_ops/function.py` and on the 11th line of the file with code
   ```python
   output = subprocess.check_output('terraform output -json', shell=True, cwd = r'<PATH_TO_THE_CLONED_FILE>' #C:\Users\Saahen\Desktop\ClassiSage
   ```
-and change it to the path where the project directory is present and save it.
+  and change it to the path where the project directory is present and save it.
 - Then on the `ClassiSage\ml_ops\data_upload.ipynb` run all code cell till cell number 25 with the code 
   ``` python
   # Try to upload the local CSV file to the S3 bucket
@@ -169,9 +169,10 @@ and change it to the path where the project directory is present and save it.
     print(f"Failed to upload file: {e}")
     os.remove(local_file_path)
   ```
-to upload dataset to S3 Bucket.
+  to upload dataset to S3 Bucket.
 
 **Output of the code cell execution**
+
 ![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
 
 - After the execution of the notebook re-open your AWS Management Console.
