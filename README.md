@@ -6,7 +6,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 - [Overview](#overview): Project Overview.
 - [Model](#model): Model Overview.
 - [Getting Started](#getting-started): How to run the project.
-- [Console Observations](#console-observation-note): Changes in instances and infrastructure that can be observed during running the project.
+- [Console Observations](#console-observation-notes): Changes in instances and infrastructure that can be observed during running the project.
 - [Ending and Cleanup](#ending-and-cleanup): Ensuring no additional charges.
 - [Auto Created Objects](#auto-created-objects): Files and Folders created during execution process.
 
