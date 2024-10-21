@@ -397,7 +397,7 @@ an output path will be setup in the S3 to store model data.
 ``` python
 estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 ```
-`A training job will start, you can check it under the training tab.
+- A training job will start, you can check it under the training tab.
 ![4](https://github.com/user-attachments/assets/7391e566-b6df-4a58-b381-116eca49ed84)
 
 - After some time (3 mins est.) It shall be completed and will show the same.
@@ -422,19 +422,13 @@ an endpoint will be deployed under Inference tab.
 - In the VS Code comeback to data_upload.ipynb to execute last 2 code cells to download the S3 bucket's data into the local system.
 - The folder will be named downloaded_bucket_content
 ![dbc](https://github.com/user-attachments/assets/28da4fb9-b533-4e3d-9521-22d9b2cd6b87)
+
 Directory Structure of folder Downloaded.
--------------------------------------------------------------------------------------------------
-**Model Observation Note:**
-
--------------------------------------------------------------------------------------------------
-
 - You will get a log of downloaded files in the output cell. It will contain a raw pretrained_sm.ipynb, final_dataset.csv and a model output folder named 'pretrained-algo' with the execution data of the sagemaker code file.
-
-- Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
-
-
+-------------------------------------------------------------------------------------------------
 - Finally go into pretrained_sm present inside the SageMaker instance and execute the final 2 code cells.
 - **The end-point and the resources within the S3 bucket will be deleted to ensure no additional charges.**
+- Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
 
 
 **Auto Created Files** 
