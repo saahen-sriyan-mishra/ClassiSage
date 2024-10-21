@@ -15,6 +15,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 
 
 ### Model
+----------------------------
 - Image URI
 ``` python
 # Looks for the XGBoost image URI and builds an XGBoost container. Specify the repo_version depending on preference.
@@ -24,6 +25,7 @@ container = get_image_uri(boto3.Session().region_name,
 ```
 ![a](https://github.com/user-attachments/assets/74cc5ffe-b437-4156-a234-75b5d8f0cd14)
 
+----------------------------
 - Initializing Hyper Parameter and Estimator call to the container
 ``` python
 hyperparameters = {
@@ -49,6 +51,7 @@ estimator = sagemaker.estimator.Estimator(image_uri=container,                  
 ```
 ![b](https://github.com/user-attachments/assets/524488c3-23fb-472f-9892-803afe7bdeca)
 
+----------------------------
 - Training Job
 
 ``` python
@@ -56,12 +59,14 @@ estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 ```
 ![c](https://github.com/user-attachments/assets/3e43ff2e-7d68-4441-a184-eef99ebfc984)
 
+----------------------------
 - Deployment
 ``` python
 xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
 ```
 ![d](https://github.com/user-attachments/assets/3434c2ef-b782-452d-b0e1-f8599a15cdd3)
 
+----------------------------
 - Validation
 ``` python
 from sagemaker.serializers import CSVSerializer
@@ -117,12 +122,14 @@ print(f"False Positive Rate: {false_positive_rate:.8f}")
 ```
 ![e](https://github.com/user-attachments/assets/037391ca-ac07-46a5-87d1-86311001d2b2)
 
+----------------------------
 - Deleting The EndPoint
 ``` python
 sagemaker.Session().delete_endpoint(xgb_predictor.endpoint)
 ```
 ![f](https://github.com/user-attachments/assets/e02ba82d-5bd1-41cf-a024-7b7b45a0c7fc)
 
+----------------------------
 - Clearing S3 (Needed to destroy the instance)
 ``` python
 bucket_to_delete = boto3.resource('s3').Bucket(bucket_name)
@@ -146,29 +153,9 @@ aws_account_id = "<YOUR_AWS_ACCOUNT_ID>"
 ```
 
 - Download and install all the dependancies for using Terraform and Python.
-- In the terminal type/paste `terraform init` to initialize the backend.
-
-```bash
-Initializing the backend...
-Initializing provider plugins...
-- Reusing previous version of hashicorp/aws from the dependency lock file
-- Reusing previous version of hashicorp/random from the dependency lock file
-- Using previously-installed hashicorp/aws v5.70.0
-- Using previously-installed hashicorp/random v3.6.3
-
-Terraform has been successfully initialized!
-
-You may now begin working with Terraform. Try running "terraform plan" to see
-any changes that are required for your infrastructure. All Terraform commands
-should now work.
-
-If you ever set or change modules or backend configuration for Terraform,
-rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary
-```
+- In the terminal type/paste [`terraform init`](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/Terraform%20init.md) to initialize the backend.
 
 - Then type/paste [`terraform Plan`](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/Terraform%20Plan.md) to view the plan or simply `terraform validate` to ensure that there is no error.
-
 
 - Finally in the terminal type/paste `terraform apply --auto-approve`
 - This will show two outputs one as bucket_name other as pretrained_ml_instance_name (The 3rd resource is the variable name given to the bucket since they are global resources ).
@@ -181,7 +168,7 @@ commands will detect it and remind you to do so if necessary
 output = subprocess.check_output('terraform output -json', shell=True, cwd = r'<PATH_TO_THE_CLONED_FILE>' #C:\Users\Saahen\Desktop\ClassiSage
 ```
 and change it to the path where the project directory is present and save it.
-- Then on the `ClassiSage\ml_ops\data_upload.ipynb` run all code cell till cell number 25 with the code 
+- Then on the [`ClassiSage\ml_ops\data_upload.ipynb`] run all code cell till cell number 25 with the code 
 ``` python
 # Try to upload the local CSV file to the S3 bucket
 try:
