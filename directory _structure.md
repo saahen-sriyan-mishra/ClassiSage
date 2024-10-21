@@ -1,8 +1,7 @@
 # ClassiSage's Directory Structure, Excluding the Auto Created Objects (Files/Folders)
 
-
----------------------------------------------------------------------------------------
 ClassiSage/
+
 ---------------------------------------------------------------------------------------
     aws_modules/
         s3/
