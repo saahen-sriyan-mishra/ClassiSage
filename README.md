@@ -226,7 +226,7 @@ print(f"False Positive Rate: {false_positive_rate:.8f}")
 - **The data will be fetched, split into train and test sets after being adjusted for Labels and Features with a defined output path, then a model using SageMaker's Python SDK will be Trained, Deployed as a EndPoint, Validated to give different metrics.**  
 
 -------------------------------------------------------------------------------------------------
-### Console Observation Notes
+## Console Observation Notes
 **Execution of 8th cell**
 ``` python
 # Set an output path where the trained model will be saved
