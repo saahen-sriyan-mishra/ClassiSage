@@ -1,3 +1,4 @@
+``` bash
 Terraform used the selected providers to generate the following execution plan. Resource actions 
   + create
 
@@ -115,4 +116,5 @@ Changes to Outputs:
 
 ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
 
-Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.         
+Note: You didn't use the -out option to save this plan, so Terraform can't guarantee to take exactly these actions if you run "terraform apply" now.     
+```
