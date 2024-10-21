@@ -1,8 +1,8 @@
-[Terraform Plan.txt](https://github.com/user-attachments/files/17457764/Terraform.Plan.txt)[Terraform init.txt](https://github.com/user-attachments/files/17457734/Terraform.init.txt)# ClassiSage
+# ClassiSage
 A Machine Learning model made with AWS SageMaker and its Python SDK for Classification of HDFS Logs using Terraform for automation of infrastructure setup.
 
 
-**Content**
+## **Content**
 - [Overview](#overview): Project Overview.
 - [Model](#model): Model Overview.
 - [Getting Started](#getting-started): How to run the project.
