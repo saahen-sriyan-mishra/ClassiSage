@@ -169,23 +169,19 @@ try:
 except Exception as e:
     print(f"Failed to upload file: {e}")
     os.remove(local_file_path)
-```
+  ```
  to upload dataset to S3 Bucket.
 
-**Output of the code cell execution**
-
-![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
+  **Output of the code cell execution**
+  ![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
 
 - After the execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
--------------------------------------------------------------------------------------------------
-**S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the pretrained_sm.ipynb file containing model code.**
+  **S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the pretrained_sm.ipynb file containing model code.**
+  ![1](https://github.com/user-attachments/assets/a3c177d8-6155-44b3-81f5-43b46e997548)
 
-![1](https://github.com/user-attachments/assets/a3c177d8-6155-44b3-81f5-43b46e997548)
-
-**A SageMaker instance InService.**
-
-![2](https://github.com/user-attachments/assets/2b26d3f5-d955-4990-a0af-2eb7fe356ed7)
+  **A SageMaker instance InService.**
+  ![2](https://github.com/user-attachments/assets/2b26d3f5-d955-4990-a0af-2eb7fe356ed7)
 
 -------------------------------------------------------------------------------------------------
 - Go to the notebook instance in the AWS SageMaker, click on the created instance and click on open Jupyter.
@@ -194,11 +190,11 @@ except Exception as e:
 
 -------------------------------------------------------------------------------------------------
 - On the terminal paste the following (Replacing <Bucket-Name> with the bucket_name output that is shown in the VS Code's terminal output):
-```bash
-aws s3 cp s3://<Bucket-Name>/pretrained_sm.ipynb /home/ec2-user/SageMaker/
-```
-**Terminal command to upload the pretrained_sm.ipynb from S3 to Notebook's Jupyter environment**
-![3](https://github.com/user-attachments/assets/859bc4b6-2027-4e28-9ab7-cb9d521d499a)
+  ```bash
+  aws s3 cp s3://<Bucket-Name>/pretrained_sm.ipynb /home/ec2-user/SageMaker/
+  ```
+  **Terminal command to upload the pretrained_sm.ipynb from S3 to Notebook's Jupyter environment**
+  ![3](https://github.com/user-attachments/assets/859bc4b6-2027-4e28-9ab7-cb9d521d499a)
 
 -------------------------------------------------------------------------------------------------
 - Go Back to the opened Jupyter instance and click on the `pretrained_sm.ipynb` file to open it and assign it a `conda_python3` Kernel.
@@ -211,9 +207,8 @@ sess = boto3.session.Session()
 print("Region is " + my_region + " and bucket is " + bucket_name)
 ```
 
-**Output of the code cell execution**
-
-![el](https://github.com/user-attachments/assets/6517d028-f6a4-49f6-a01f-04ffdf0884a5)
+  **Output of the code cell execution**
+  ![el](https://github.com/user-attachments/assets/6517d028-f6a4-49f6-a01f-04ffdf0884a5)
 
 -------------------------------------------------------------------------------------------------
 - On the top of the file do a `Restart` by going to the Kernel tab.
@@ -271,9 +266,8 @@ xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.l
 ### Ending and Cleanup
 - In the VS Code comeback to data_upload.ipynb to execute last 2 code cells to download the S3 bucket's data into the local system.
 - The folder will be named downloaded_bucket_content.
-**Directory Structure of folder Downloaded.**
-
-![dbc](https://github.com/user-attachments/assets/28da4fb9-b533-4e3d-9521-22d9b2cd6b87)
+  **Directory Structure of folder Downloaded.**
+  ![dbc](https://github.com/user-attachments/assets/28da4fb9-b533-4e3d-9521-22d9b2cd6b87)
 
 - You will get a log of downloaded files in the output cell. It will contain a raw pretrained_sm.ipynb, final_dataset.csv and a model output folder named 'pretrained-algo' with the execution data of the sagemaker code file.
 - Finally go into pretrained_sm.ipynb present inside the SageMaker instance and execute the final 2 code cells.
