@@ -25,7 +25,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
                             'xgboost', 
                             repo_version='1.0-1')
   ```
-  [  ![a](https://github.com/user-attachments/assets/74cc5ffe-b437-4156-a234-75b5d8f0cd14)](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/a.jpg)
+  [a](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/a.jpg)
 
 - **Initializing Hyper Parameter and Estimator call to the container**
   ``` python
@@ -50,7 +50,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
                                           train_max_run=300,                    # Specifies the maximum runtime for the training job in seconds. Here, it's 300 seconds (5 minutes).
                                           train_max_wait=600)                   # Sets the maximum time to wait for the job to complete, including the time waiting for spot instances, in seconds. Here, it's 600 seconds (10 minutes).
   ```
-  ![b](https://github.com/user-attachments/assets/524488c3-23fb-472f-9892-803afe7bdeca)
+  ![b](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/b.jpg)
 
 - **Training Job**
 
