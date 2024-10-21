@@ -177,7 +177,8 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 
 - After the execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
-  **S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the pretrained_sm.ipynb file containing model code.**
+ 
+ **S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the pretrained_sm.ipynb file containing model code.**
   ![1](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/1.jpg)
 
   **A SageMaker instance InService.**
