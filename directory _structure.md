@@ -1,7 +1,6 @@
 # ClassiSage's Directory Structure, Excluding the Auto Created Objects (Files/Folders)
 
-ClassiSage/
-
+## Terraform Files
 ---------------------------------------------------------------------------------------
     aws_modules/
         s3/
@@ -13,11 +12,13 @@ ClassiSage/
     variables.tf 
     output.tf
 ---------------------------------------------------------------------------------------
+## Python Files
     ml_ops/
         functions.py
         data_upload.ipynb
         pretrained_sm.ipynb
 ---------------------------------------------------------------------------------------
+## Data Files
     data/
         Event_occurence_matrix/
             Event_occurence_matrix_part_1.csv
