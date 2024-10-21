@@ -279,19 +279,17 @@ xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.l
 - Finally go into pretrained_sm.ipynb present inside the SageMaker instance and execute the final 2 code cells.
 **The end-point and the resources within the S3 bucket will be deleted to ensure no additional charges.**
 - Deleting The EndPoint
-``` python
-sagemaker.Session().delete_endpoint(xgb_predictor.endpoint)
-```
-
-![f](https://github.com/user-attachments/assets/e02ba82d-5bd1-41cf-a024-7b7b45a0c7fc)
+  ``` python
+  sagemaker.Session().delete_endpoint(xgb_predictor.endpoint)
+  ```
+  ![f](https://github.com/user-attachments/assets/e02ba82d-5bd1-41cf-a024-7b7b45a0c7fc)
 
 - Clearing S3: (Needed to destroy the instance)
-``` python
-bucket_to_delete = boto3.resource('s3').Bucket(bucket_name)
-bucket_to_delete.objects.all().delete()
-```
-
-![g](https://github.com/user-attachments/assets/4df008a8-9a1e-4b35-aa01-c304b717bf51)
+  ``` python
+  bucket_to_delete = boto3.resource('s3').Bucket(bucket_name)
+  bucket_to_delete.objects.all().delete()
+  ```
+  ![g](https://github.com/user-attachments/assets/4df008a8-9a1e-4b35-aa01-c304b717bf51)
 
 - Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
 - All the created resource instances will be deleted.
