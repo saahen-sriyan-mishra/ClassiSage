@@ -25,7 +25,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
                             'xgboost', 
                             repo_version='1.0-1')
   ```
-  [a](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/a.jpg)
+  ![a](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/a.jpg)
 
 - **Initializing Hyper Parameter and Estimator call to the container**
   ``` python
@@ -57,13 +57,13 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
   ``` python
   estimator.fit({'train': s3_input_train,'validation': s3_input_test})
   ```
-  ![c](https://github.com/user-attachments/assets/3e43ff2e-7d68-4441-a184-eef99ebfc984)
+  ![c](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/c.jpg)
 
 - **Deployment**
   ``` python
   xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
   ```
-  ![d](https://github.com/user-attachments/assets/3434c2ef-b782-452d-b0e1-f8599a15cdd3)
+  ![d](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/d.jpg)
 
 - **Validation**
   ``` python
@@ -117,7 +117,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
   print(f"F1 Score: {f1:.8f}")
   print(f"False Positive Rate: {false_positive_rate:.8f}")
   ```
-  ![e](https://github.com/user-attachments/assets/037391ca-ac07-46a5-87d1-86311001d2b2)
+  ![e](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/e.jpg)
 
 ## Getting Started
 - Clone the repository using Git Bash / download a .zip file / fork the repository.
@@ -142,7 +142,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 - Finally in the terminal type/paste `terraform apply --auto-approve`
 - This will show two outputs one as bucket_name other as pretrained_ml_instance_name (The 3rd resource is the variable name given to the bucket since they are global resources ).
 
-  ![0000](https://github.com/user-attachments/assets/d8d788a6-b8b8-4619-8999-c530625535cb)
+  ![0000](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/0000.jpg)
 
 - After Completion of the command is shown in the terminal, navigate to `ClassiSage/ml_ops/function.py` and on the 11th line of the file with code
   ```python
@@ -173,7 +173,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 
 - **Output of the code cell execution**
 
-  ![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
+  ![fella](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/fella.jpg)
 
 - After the execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
