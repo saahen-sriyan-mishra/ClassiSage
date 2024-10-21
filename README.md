@@ -13,10 +13,9 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 - The data set used is [HDFS_v1](https://github.com/logpai/loghub).
 - The project implements [SageMaker Python SDK](https://sagemaker.readthedocs.io/en/stable/?form=MG0AV3) with the model [XGBoost version 1.2](https://docs.aws.amazon.com/sagemaker/latest/dg/xgboost.html)
 
-
+--------------------------------------------------
 ### Model
-----------------------------
-- Image URI
+- **Image URI**
 ``` python
 # Looks for the XGBoost image URI and builds an XGBoost container. Specify the repo_version depending on preference.
 container = get_image_uri(boto3.Session().region_name,
@@ -25,8 +24,7 @@ container = get_image_uri(boto3.Session().region_name,
 ```
 ![a](https://github.com/user-attachments/assets/74cc5ffe-b437-4156-a234-75b5d8f0cd14)
 
-----------------------------
-- Initializing Hyper Parameter and Estimator call to the container
+- **Initializing Hyper Parameter and Estimator call to the container**
 ``` python
 hyperparameters = {
         "max_depth":"5",                ## Maximum depth of a tree. Higher means more complex models but risk of overfitting.
@@ -51,23 +49,20 @@ estimator = sagemaker.estimator.Estimator(image_uri=container,                  
 ```
 ![b](https://github.com/user-attachments/assets/524488c3-23fb-472f-9892-803afe7bdeca)
 
-----------------------------
-- Training Job
+- **Training Job**
 
 ``` python
 estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 ```
 ![c](https://github.com/user-attachments/assets/3e43ff2e-7d68-4441-a184-eef99ebfc984)
 
-----------------------------
-- Deployment
+- **Deployment**
 ``` python
 xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
 ```
 ![d](https://github.com/user-attachments/assets/3434c2ef-b782-452d-b0e1-f8599a15cdd3)
 
-----------------------------
-- Validation
+- **Validation**
 ``` python
 from sagemaker.serializers import CSVSerializer
 import numpy as np
@@ -122,15 +117,13 @@ print(f"False Positive Rate: {false_positive_rate:.8f}")
 ```
 ![e](https://github.com/user-attachments/assets/037391ca-ac07-46a5-87d1-86311001d2b2)
 
-----------------------------
-- Deleting The EndPoint
+- **Deleting The EndPoint**
 ``` python
 sagemaker.Session().delete_endpoint(xgb_predictor.endpoint)
 ```
 ![f](https://github.com/user-attachments/assets/e02ba82d-5bd1-41cf-a024-7b7b45a0c7fc)
 
-----------------------------
-- Clearing S3 (Needed to destroy the instance)
+- **Clearing S3** (Needed to destroy the instance)
 ``` python
 bucket_to_delete = boto3.resource('s3').Bucket(bucket_name)
 bucket_to_delete.objects.all().delete()
@@ -159,16 +152,15 @@ aws_account_id = "<YOUR_AWS_ACCOUNT_ID>"
 
 - Finally in the terminal type/paste `terraform apply --auto-approve`
 - This will show two outputs one as bucket_name other as pretrained_ml_instance_name (The 3rd resource is the variable name given to the bucket since they are global resources ).
--------------------------------------------------------------------------------------------------
+
 ![0000](https://github.com/user-attachments/assets/d8d788a6-b8b8-4619-8999-c530625535cb)
 
--------------------------------------------------------------------------------------------------
 - After Completion of the command is shown in the terminal, navigate to `ClassiSage/ml_ops/function.py` and on the 11th line of the file with code
 ```python
 output = subprocess.check_output('terraform output -json', shell=True, cwd = r'<PATH_TO_THE_CLONED_FILE>' #C:\Users\Saahen\Desktop\ClassiSage
 ```
 and change it to the path where the project directory is present and save it.
-- Then on the [`ClassiSage\ml_ops\data_upload.ipynb`] run all code cell till cell number 25 with the code 
+- Then on the `ClassiSage\ml_ops\data_upload.ipynb` run all code cell till cell number 25 with the code 
 ``` python
 # Try to upload the local CSV file to the S3 bucket
 try:
@@ -189,34 +181,30 @@ except Exception as e:
     os.remove(local_file_path)
 ```
  to upload dataset to S3 Bucket.
--------------------------------------------------------------------------------------------------
-![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
 
-Output of the code cell execution
--------------------------------------------------------------------------------------------------
+- **Output of the code cell execution**
+![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
 
 - After the execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
 -------------------------------------------------------------------------------------------------
+- **S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the pretrained_sm.ipynb file containing model code.**
 ![1](https://github.com/user-attachments/assets/a3c177d8-6155-44b3-81f5-43b46e997548)
-
-S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the .ipynb file containing model code.
--------------------------------------------------------------------------------------------------
+- **A SageMaker instance InService.**
 ![2](https://github.com/user-attachments/assets/2b26d3f5-d955-4990-a0af-2eb7fe356ed7)
-
-A SageMaker instance InService.
 -------------------------------------------------------------------------------------------------
 - Go to the notebook instance in the AWS SageMaker, click on the created instance and click on open Jupyter.
 - After that click on `new` on the top right side of the window and select on `terminal`.
 - This will create a new terminal.
+
+-------------------------------------------------------------------------------------------------
 - On the terminal paste the following (Replacing <Bucket-Name> with the bucket_name output that is shown in the VS Code's terminal output):
 ```bash
 aws s3 cp s3://<Bucket-Name>/pretrained_sm.ipynb /home/ec2-user/SageMaker/
 ```
-```
+**Terminal command to upload the pretrained_sm.ipynb from S3 to Notebook's Jupyter environment**
 ![3](https://github.com/user-attachments/assets/859bc4b6-2027-4e28-9ab7-cb9d521d499a)
-```
-Terminal command to upload the pretrained_sm.ipynb from S3 to Notebook's Jupyter environment
+
 -------------------------------------------------------------------------------------------------
 - Go Back to the opened Jupyter instance and click on the `pretrained_sm.ipynb` file to open it and assign it a `conda_python3` Kernel.
 - Scroll Down to the 4th cell and replace the variable `bucket_name`'s value by the VS Code's terminal output for `bucket_name = "<bucket-name>"`
@@ -227,10 +215,9 @@ my_region = boto3.session.Session().region_name
 sess = boto3.session.Session()
 print("Region is " + my_region + " and bucket is " + bucket_name)
 ```
-```
+**Output of the code cell execution**
 ![el](https://github.com/user-attachments/assets/6517d028-f6a4-49f6-a01f-04ffdf0884a5)
-```
-Output of the code cell execution
+
 -------------------------------------------------------------------------------------------------
 - On the top of the file do a `Restart` by going to the Kernel tab.
 - Execute the Notebook till code cell number 27, with the code 
