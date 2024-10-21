@@ -1,4 +1,5 @@
-# ClassiSage's Directory Structure, Excluding the Auto Created Objects (Files/Folders)
+# ClassiSage's Directory Structure
+**Excluding the Auto Created Objects (Files/Folders)**
 
 ## Terraform Files
 ---------------------------------------------------------------------------------------
