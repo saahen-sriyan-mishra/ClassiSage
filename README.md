@@ -22,7 +22,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 --------------------------------------------------
 ## System Architecture
 
-![System_Arch_Diagram_Terraform](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/System_Arch_Diagram_Terraform.png)
+![System_Architecture_Diagram_Terraform](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/System_Arch_Diagram_Terraform.png)
 ## ML Model
 - Image URI
   ``` python
@@ -148,7 +148,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 - Finally in the terminal type/paste `terraform apply --auto-approve`
 - This will show two outputs one as bucket_name other as pretrained_ml_instance_name (The 3rd resource is the variable name given to the bucket since they are global resources ).
 
-  ![0000](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/0000.jpg)
+  ![Terminal Output of Terraform Apply](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/0000.jpg)
 
 - After Completion of the command is shown in the terminal, navigate to `ClassiSage/ml_ops/function.py` and on the 11th line of the file with code
   ```python
@@ -179,16 +179,16 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 
 - **Output of the code cell execution**
 
-  ![fella](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/fella.jpg)
+  ![Execution of upload function's try block](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/fella.jpg)
 
 - After the execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
  
  **S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the pretrained_sm.ipynb file containing model code.**
-  ![1](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/1.jpg)
+  ![Created databucket with dataset and .ipynb file](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/1.jpg)
 
   **A SageMaker instance InService.**
-  ![2](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/2.jpg)
+  ![Created sagemaker notebook instance](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/2.jpg)
 
 -------------------------------------------------------------------------------------------------
 - Go to the notebook instance in the AWS SageMaker, click on the created instance and click on open Jupyter.
@@ -201,7 +201,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
   aws s3 cp s3://<Bucket-Name>/pretrained_sm.ipynb /home/ec2-user/SageMaker/
   ```
   **Terminal command to upload the pretrained_sm.ipynb from S3 to Notebook's Jupyter environment**
-  ![3](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/3.jpg)
+  ![Terminal command downloading the .ipynb file from S3 to Notebook env inside Jupyter](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/3.jpg)
 
 -------------------------------------------------------------------------------------------------
 - Go Back to the opened Jupyter instance and click on the `pretrained_sm.ipynb` file to open it and assign it a `conda_python3` Kernel.
@@ -216,7 +216,7 @@ print("Region is " + my_region + " and bucket is " + bucket_name)
 
   **Output of the code cell execution**
 
-  ![el](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/el.jpg)
+  ![Region and bucket name in sagemaker notebook](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/el.jpg)
 
 -------------------------------------------------------------------------------------------------
 - On the top of the file do a `Restart` by going to the Kernel tab.
@@ -243,8 +243,8 @@ output_path ='s3://{}/{}/output'.format(bucket_name, prefix)
 print(output_path)
 ```
 - An output path will be setup in the S3 to store model data.
-![x](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/x.jpg)
-![xx](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/xx.jpg)
+![Output path folder added to S3](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/x.jpg)
+![Folders loaded nto the path after execution](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/xx.jpg)
 
 
 **Execution of 23rd cell**
@@ -253,20 +253,20 @@ estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 ```
 
 - A training job will start, you can check it under the training tab.
-![4](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/4.jpg)
+![Training Job InProgress](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/4.jpg)
 - After some time (3 mins est.) It shall be completed and will show the same.
-![5](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/5.jpg)
+  [Training Job Completed](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/5.jpg)
 
 **Execution of 24th code cell**
 ``` python
 xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
 ```
 - An endpoint will be deployed under Inference tab.
-![6](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/6.jpg)
+![Deployed Endpoint](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/6.jpg)
 
 **Additional Console Observation:**
 - Creation of an Endpoint Configuration under Inference tab.
-![epc](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/epc.jpg)
+![Endpoint config](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/epc.jpg)
 - Creation of an model also under under Inference tab.
 ![model](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/model.jpg)
 
@@ -275,7 +275,7 @@ xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.l
 - In the VS Code comeback to data_upload.ipynb to execute last 2 code cells to download the S3 bucket's data into the local system.
 - The folder will be named downloaded_bucket_content.
   **Directory Structure of folder Downloaded.**
-  ![dbc](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/dbc.jpg)
+  ![downloaded bucket content](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/dbc.jpg)
 
 - You will get a log of downloaded files in the output cell. It will contain a raw pretrained_sm.ipynb, final_dataset.csv and a model output folder named 'pretrained-algo' with the execution data of the sagemaker code file.
 - Finally go into pretrained_sm.ipynb present inside the SageMaker instance and execute the final 2 code cells.
@@ -284,14 +284,14 @@ xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.l
   ``` python
   sagemaker.Session().delete_endpoint(xgb_predictor.endpoint)
   ```
-  ![f](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/f.jpg)
+  ![EndPoint Deletion](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/f.jpg)
 
 - Clearing S3: (Needed to destroy the instance)
   ``` python
   bucket_to_delete = boto3.resource('s3').Bucket(bucket_name)
   bucket_to_delete.objects.all().delete()
   ```
-  ![g](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/g.jpg)
+  ![Deleting All objects in S3](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/g.jpg)
 
 - Come back to the VS Code terminal for the project file and then type/paste `terraform destroy --auto-approve`
 - All the created resource instances will be deleted.
