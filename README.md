@@ -167,7 +167,7 @@ rerun this command to reinitialize your working directory. If you forget, other
 commands will detect it and remind you to do so if necessary
 ```
 
-- Then type/paste `terraform Plan` to view the plan or simply `terraform validate` to ensure that there is no error.
+- Then type/paste [`terraform Plan`](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/Terraform%20Plan.md) to view the plan or simply `terraform validate` to ensure that there is no error.
 
 
 - Finally in the terminal type/paste `terraform apply --auto-approve`
