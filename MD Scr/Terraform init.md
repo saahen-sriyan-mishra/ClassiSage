@@ -1,3 +1,4 @@
+```bash
 Initializing the backend...
 Initializing provider plugins...
 - Reusing previous version of hashicorp/aws from the dependency lock file
@@ -13,4 +14,5 @@ should now work.
 
 If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.
+commands will detect it and remind you to do so if necessary
+```
