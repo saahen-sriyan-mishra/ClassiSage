@@ -239,8 +239,7 @@ prefix = 'pretrained-algo'
 output_path ='s3://{}/{}/output'.format(bucket_name, prefix)
 print(output_path)
 ```
-An output path will be setup in the S3 to store model data.
-
+- An output path will be setup in the S3 to store model data.
 ![x](https://github.com/user-attachments/assets/008e7340-d064-4f8a-b11c-c9d3e8470996)
 ![xx](https://github.com/user-attachments/assets/4f9384e7-4a45-4220-a903-c84750689c9a)
 
@@ -260,7 +259,6 @@ estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
 ```
 - An endpoint will be deployed under Inference tab.
-
 ![6](https://github.com/user-attachments/assets/e5ca8d0f-b626-4d10-ad98-950c9a05d0f1)
 
 **Additional Console Observation:**
