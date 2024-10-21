@@ -22,7 +22,7 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 --------------------------------------------------
 ## System Architecture
 
-![![System_Arch_Diagram_Terraform](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/Untitled%20design.png)](https://github.com/user-attachments/assets/1d9be0ac-89a1-499d-9622-9e86e286da7d)
+![System_Arch_Diagram_Terraform](https://github.com/user-attachments/assets/1d9be0ac-89a1-499d-9622-9e86e286da7d)
 ## ML Model
 - Image URI
   ``` python
