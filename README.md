@@ -182,16 +182,21 @@ except Exception as e:
 ```
  to upload dataset to S3 Bucket.
 
-- **Output of the code cell execution**
+**Output of the code cell execution**
+
 ![fella](https://github.com/user-attachments/assets/887fefdd-d61b-4890-869b-74d858ddc926)
 
 - After the execution of the notebook re-open your AWS Management Console.
 - You can search for S3 and Sagemaker services and will see an instance of each service initiated (A S3 bucket and a SageMaker Notebook)
 -------------------------------------------------------------------------------------------------
-- **S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the pretrained_sm.ipynb file containing model code.**
+**S3 Bucket with named 'data-bucket-<random_string>' with 2 objects uploaded, a dataset and the pretrained_sm.ipynb file containing model code.**
+
 ![1](https://github.com/user-attachments/assets/a3c177d8-6155-44b3-81f5-43b46e997548)
-- **A SageMaker instance InService.**
+
+**A SageMaker instance InService.**
+
 ![2](https://github.com/user-attachments/assets/2b26d3f5-d955-4990-a0af-2eb7fe356ed7)
+
 -------------------------------------------------------------------------------------------------
 - Go to the notebook instance in the AWS SageMaker, click on the created instance and click on open Jupyter.
 - After that click on `new` on the top right side of the window and select on `terminal`.
@@ -215,7 +220,9 @@ my_region = boto3.session.Session().region_name
 sess = boto3.session.Session()
 print("Region is " + my_region + " and bucket is " + bucket_name)
 ```
+
 **Output of the code cell execution**
+
 ![el](https://github.com/user-attachments/assets/6517d028-f6a4-49f6-a01f-04ffdf0884a5)
 
 -------------------------------------------------------------------------------------------------
@@ -242,20 +249,20 @@ prefix = 'pretrained-algo'
 output_path ='s3://{}/{}/output'.format(bucket_name, prefix)
 print(output_path)
 ```
+an output path will be setup in the S3 to store model data.
+
 ![x](https://github.com/user-attachments/assets/008e7340-d064-4f8a-b11c-c9d3e8470996)
 ![xx](https://github.com/user-attachments/assets/4f9384e7-4a45-4220-a903-c84750689c9a)
 
-an output path will be setup in the S3 to store model data.
---------------------------------
 
 - On execution of 23rd cell with code
 ``` python
 estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 ```
-- A training job will start, you can check it under the training tab.
-![4](https://github.com/user-attachments/assets/7391e566-b6df-4a58-b381-116eca49ed84)
 
-- After some time (3 mins est.) It shall be completed and will show the same.
+  A training job will start, you can check it under the training tab.
+![4](https://github.com/user-attachments/assets/7391e566-b6df-4a58-b381-116eca49ed84)
+  After some time (3 mins est.) It shall be completed and will show the same.
 ![5](https://github.com/user-attachments/assets/313bd40d-9570-4b25-8dc1-86a9dc00b2a1)
 
 - On execution of the code cell after that with code
@@ -263,6 +270,7 @@ estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
 ```
 an endpoint will be deployed under Inference tab.
+
 ![6](https://github.com/user-attachments/assets/e5ca8d0f-b626-4d10-ad98-950c9a05d0f1)
 
 -------------------------------------------------------------------------------------------------
