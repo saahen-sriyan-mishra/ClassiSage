@@ -18,7 +18,7 @@ resource "aws_s3_bucket" "data_bucket" {
   }
 }
 
-
+# Reference for output.tf to be able to access
 output "bucket_name" {
   value = aws_s3_bucket.data_bucket.id 
 }

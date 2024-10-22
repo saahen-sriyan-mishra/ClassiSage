@@ -48,10 +48,10 @@ variable "bucket_name" {
 
 # Upload the notebook file to S3
 resource "aws_s3_object" "notebook_file" {
-  bucket = var.bucket_name  # Reference the S3 bucket passed as a variable
-  key    = "pretrained_sm.ipynb"  # The name you want to give the notebook file in S3
-  source = "${path.module}/../../ml_ops/pretrained_sm.ipynb"  # Corrected path to the notebook file
-  acl    = "private"  # Set the appropriate ACL for your use case
+  bucket = var.bucket_name  # Reference the S3 bucket passed as a variable (above function)
+  key    = "pretrained_sm.ipynb"  # The name to give to the notebook file in S3
+  source = "${path.module}/../../ml_ops/pretrained_sm.ipynb"  # Path to the notebook file
+  acl    = "private"  # Set the appropriate ACL
 }
 
 
@@ -68,7 +68,7 @@ resource "aws_sagemaker_notebook_instance" "pretrained_ml_instance" {
 
 # Reference for output.tf to be able to access
 output "pretrained_ml_instance_name" {
-  value = aws_sagemaker_notebook_instance.pretrained_ml_instance.name  # Export the name of the SageMaker instance
+  value = aws_sagemaker_notebook_instance.pretrained_ml_instance.name  # Export the name of SageMaker instance
 }
 
 # Use the bucket name for the S3 output path
