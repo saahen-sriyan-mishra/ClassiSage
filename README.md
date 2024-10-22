@@ -255,20 +255,20 @@ estimator.fit({'train': s3_input_train,'validation': s3_input_test})
 - A training job will start, you can check it under the training tab.
 ![Training Job InProgress](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/4.jpg)
 - After some time (3 mins est.) It shall be completed and will show the same.
-  [Training Job Completed](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/5.jpg)
+![Training Job Completed](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/5.jpg)
 
 **Execution of 24th code cell**
 ``` python
 xgb_predictor = estimator.deploy(initial_instance_count=1,instance_type='ml.m5.large')
 ```
 - An endpoint will be deployed under Inference tab.
-![Deployed Endpoint](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/6.jpg)
+![Deployed Endpoint](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/6.png)
 
 **Additional Console Observation:**
 - Creation of an Endpoint Configuration under Inference tab.
-![Endpoint config](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/epc.jpg)
+![Endpoint config](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/epc.png)
 - Creation of an model also under under Inference tab.
-![model](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/model.jpg)
+![model](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/model.png)
 
 -------------------------------------------------------------------------------------------------
 ## Ending and Cleanup
