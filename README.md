@@ -3,6 +3,7 @@
 
 A Machine Learning model made with AWS SageMaker and its Python SDK for Classification of HDFS Logs using Terraform for automation of infrastructure setup.
 
+Link: [DEV Blog](https://dev.to/saahen_sriyan_mishra/classisage-terraform-iac-automated-aws-sagemaker-based-hdfs-log-classification-model-4pk4)
 
 ## **Content**
 - [Overview](#overview): Project Overview.
