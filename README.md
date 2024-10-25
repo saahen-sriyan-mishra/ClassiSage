@@ -25,14 +25,14 @@ A Machine Learning model made with AWS SageMaker and its Python SDK for Classifi
 ![System_Architecture_Diagram_Terraform](https://github.com/saahen-sriyan-mishra/ClassiSage/blob/main/MD%20Scr/System_Arch_Diagram_Terraform.png)
 ## ML Model
 - Image URI
-(Old Version)
+(Old Version): Specify the repo_version depending on preference.
   ``` python
-  # Looks for the XGBoost image URI and builds an XGBoost container. Specify the repo_version depending on preference.
+  # Looks for the XGBoost image URI and builds an XGBoost container.
   container = get_image_uri(boto3.Session().region_name,
                             'xgboost', 
                             repo_version='1.0-1')
   ```
-(Updated Version)
+- Image URI (Updated Version)
   ``` python
   container = sagemaker.image_uris.retrieve(framework='xgboost', 
                                           region=boto3.Session().region_name, 
